@@ -12,7 +12,7 @@ public class Student {
     @javax.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     private int age;
 
@@ -22,13 +22,19 @@ public class Student {
     private Faculty faculty;
 
 
-    public Student(long id, String name, int age){
+    public Student(Long id, String name, int age){
         this.id = id;
         this.name = name;
         this.age = age;
     }
 
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
     public Student() {
+
     }
 
     public Faculty getFaculty() {
@@ -43,7 +49,7 @@ public class Student {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
