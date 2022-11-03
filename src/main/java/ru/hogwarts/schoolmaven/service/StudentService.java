@@ -1,5 +1,6 @@
 package ru.hogwarts.schoolmaven.service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.schoolmaven.model.Faculty;
 import ru.hogwarts.schoolmaven.model.Student;
@@ -49,10 +50,22 @@ public class StudentService {
     }
 
     public Faculty findStudentsFaculty(Long id){
-        Student student = studentRepository.findById(id).get();
+        Student student = studentRepository.findById(id).orElse(null);
         if (student != null){
             return student.getFaculty();
         }
         return null;
+    }
+
+    public int totalCountOfStudents() {
+        return studentRepository.totalCountOfStudents();
+    }
+
+    public double averageAgeOfStudents() {
+        return studentRepository.averageAgeOfStudents();
+    }
+
+    public Collection<Student> lastFiveStudent() {
+        return studentRepository.lastFiveStudent();
     }
 }

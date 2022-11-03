@@ -66,7 +66,7 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.findFacultiesByColorOrName(nameOrColor));
     }
 
-    @GetMapping("students_faculty/{id}")
+    @GetMapping("/{id}/students_faculty")
     public ResponseEntity<Collection<Student>> findFacultyByStudent(@PathVariable long id) {
         return ResponseEntity.ok(facultyService.findFacultyByStudent(id));
     }

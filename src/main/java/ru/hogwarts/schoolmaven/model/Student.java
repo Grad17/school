@@ -10,7 +10,6 @@ import java.util.Objects;
 public class Student {
 
     @javax.persistence.Id
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;

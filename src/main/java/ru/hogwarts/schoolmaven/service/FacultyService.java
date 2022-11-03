@@ -49,7 +49,7 @@ public class FacultyService {
     }
 
     public Collection<Student> findFacultyByStudent(long id) {
-        Faculty faculty = facultyRepository.findById(id).get();
+        Faculty faculty = facultyRepository.findById(id).orElse(null);
         if (faculty != null) {
             return faculty.getStudents();
         }

@@ -66,8 +66,23 @@ public class StudentController {
         return ResponseEntity.ok(studentService.findByAgeRange(min, max));
     }
 
-    @GetMapping("faculty_student/{id}")
+    @GetMapping("/{id}/faculty_student")
     public ResponseEntity<Faculty> findStudentsByFaculty(@PathVariable long id){
         return ResponseEntity.ok(studentService.findStudentsFaculty(id));
+    }
+
+    @GetMapping("/totalCount")
+    public int totalCountOfStudents() {
+        return studentService.totalCountOfStudents();
+    }
+
+    @GetMapping("/ageAverage")
+    public double averageAgeOfStudents() {
+        return studentService.averageAgeOfStudents();
+    }
+
+    @GetMapping("/lastFiveStudent")
+    public ResponseEntity<Collection<Student>> lastFiveStudent() {
+        return ResponseEntity.ok(studentService.lastFiveStudent());
     }
 }
