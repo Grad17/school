@@ -8,16 +8,14 @@ import ru.hogwarts.schoolmaven.model.Faculty;
 import ru.hogwarts.schoolmaven.model.Student;
 import ru.hogwarts.schoolmaven.repositories.StudentRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
 
     private final StudentRepository studentRepository;
-    Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -81,5 +79,24 @@ public class StudentService {
     public Collection<Student> lastFiveStudent() {
         logger.debug("The method lastFiveStudents is called");
         return studentRepository.lastFiveStudent();
+    }
+
+    public List<String> getStudentByLetter(String letter) {
+        logger.debug("The method getStudentByLetter is called");
+
+        return studentRepository.findAll().stream()
+                .map(Student::getName)
+                .filter(s -> s.startsWith(letter))
+                .sorted(String::compareTo)
+                .map(String::toUpperCase)
+                .collect(Collectors.toList());
+    }
+
+    public OptionalDouble getAge(){
+        logger.debug("The method getAge is called");
+
+        return studentRepository.findAll().stream()
+                .mapToDouble(Student::getAge)
+                .average();
     }
 }

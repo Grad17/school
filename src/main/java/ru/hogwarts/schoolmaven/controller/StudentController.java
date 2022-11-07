@@ -7,6 +7,8 @@ import ru.hogwarts.schoolmaven.model.Student;
 import ru.hogwarts.schoolmaven.service.StudentService;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.OptionalDouble;
 
 @RestController
 @RequestMapping("student")
@@ -84,5 +86,15 @@ public class StudentController {
     @GetMapping("/lastFiveStudent")
     public ResponseEntity<Collection<Student>> lastFiveStudent() {
         return ResponseEntity.ok(studentService.lastFiveStudent());
+    }
+
+    @GetMapping("student_by_Letter/{Letter}")
+    public ResponseEntity<List<String>> getStudentByLetter(@PathVariable String Letter){
+        return ResponseEntity.ok(studentService.getStudentByLetter(Letter));
+    }
+
+    @GetMapping("student_age")
+    public ResponseEntity<OptionalDouble> getAverageAge(){
+        return ResponseEntity.ok(studentService.getAge());
     }
 }

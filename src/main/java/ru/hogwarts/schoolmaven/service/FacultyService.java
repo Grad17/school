@@ -7,15 +7,13 @@ import ru.hogwarts.schoolmaven.model.Faculty;
 import ru.hogwarts.schoolmaven.model.Student;
 import ru.hogwarts.schoolmaven.repositories.FacultyRepository;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class FacultyService {
 
     private final FacultyRepository facultyRepository;
-    Logger logger = LoggerFactory.getLogger(FacultyService.class);
+    private final Logger logger = LoggerFactory.getLogger(FacultyService.class);
 
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
@@ -65,5 +63,12 @@ public class FacultyService {
             return faculty.getStudents();
         }
         return null;
+    }
+
+    public Optional<String> longNameFaculty(){
+        logger.debug("The method longNameFaculty is called");
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparingInt(String::length));
     }
 }

@@ -7,6 +7,7 @@ import ru.hogwarts.schoolmaven.model.Student;
 import ru.hogwarts.schoolmaven.service.FacultyService;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("faculty")
@@ -69,5 +70,9 @@ public class FacultyController {
     @GetMapping("/{id}/students_faculty")
     public ResponseEntity<Collection<Student>> findFacultyByStudent(@PathVariable long id) {
         return ResponseEntity.ok(facultyService.findFacultyByStudent(id));
+    }
+    @GetMapping("long_name_faculty")
+    public ResponseEntity<Optional<String>> getLongName(){
+        return ResponseEntity.ok(facultyService.longNameFaculty());
     }
 }
