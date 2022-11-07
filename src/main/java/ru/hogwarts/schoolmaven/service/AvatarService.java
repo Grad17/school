@@ -40,6 +40,7 @@ public class AvatarService {
     }
 
     public void uploadAvatar(Long studentId, MultipartFile file) throws IOException {
+        logger.debug("The method uploadAvatar is called");
         Student student = studentService.findStudent(studentId);
 
         Path filePath = Path.of(coversDir, studentId + "." + getExtension(file.getOriginalFilename()));
@@ -70,6 +71,7 @@ public class AvatarService {
     }
 
     public Avatar findAvatar(Long studentId) {
+        logger.debug("The method findAvatar is called");
         return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
     }
 
