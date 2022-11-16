@@ -17,6 +17,8 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
+    private final Object flag = new Object();
+
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
@@ -98,5 +100,50 @@ public class StudentService {
         return studentRepository.findAll().stream()
                 .mapToDouble(Student::getAge)
                 .average();
+    }
+
+    public void findStudentThread1() {
+        logger.debug("The method findStudentThread is called");
+        doOperation1(1);
+        doOperation1(69);
+
+        new Thread(() -> {
+            doOperation1(64);
+            doOperation1(65);
+        }).start();
+
+        new Thread(() -> {
+            doOperation1(68);
+            doOperation1(67);
+        }).start();
+    }
+
+    public void findStudentThread2() {
+        logger.debug("The method findStudentThread1 is called");
+
+        doOperation2(1);
+        doOperation2(69);
+
+        new Thread(() -> {
+            doOperation2(64);
+            doOperation2(65);
+        }).start();
+
+        new Thread(() -> {
+            doOperation2(68);
+            doOperation2(67);
+        }).start();
+    }
+
+    public void doOperation1(long id) {
+        Student findStudent = studentRepository.findById(id).orElse(null);
+        System.out.println("Student " + findStudent);
+    }
+
+    public void doOperation2(long id) {
+        synchronized (flag) {
+            Student findStudent = studentRepository.findById(id).orElse(null);
+            System.out.println("Student " + findStudent);
+        }
     }
 }
