@@ -2,7 +2,7 @@ package ru.hogwarts.schoolmaven.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.schoolmaven.model.Faculty;
 import ru.hogwarts.schoolmaven.model.Student;
@@ -44,9 +44,10 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public Collection<Student> allStudent(){
+    public Collection<Student> allStudent(Integer pageNumber, Integer pageSize){
         logger.debug("The method allStudent is called");
-        return studentRepository.findAll();
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        return studentRepository.findAll(pageRequest).getContent();
     }
 
     public Collection<Student> findByAge(int age) {
@@ -136,8 +137,10 @@ public class StudentService {
     }
 
     public void doOperation1(long id) {
-        Student findStudent = studentRepository.findById(id).orElse(null);
-        System.out.println("Student " + findStudent);
+        synchronized (flag) {
+            Student findStudent = studentRepository.findById(id).orElse(null);
+            System.out.println("Student " + findStudent);
+        }
     }
 
     public void doOperation2(long id) {

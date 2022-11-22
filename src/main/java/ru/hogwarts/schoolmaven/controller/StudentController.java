@@ -6,6 +6,7 @@ import ru.hogwarts.schoolmaven.model.Faculty;
 import ru.hogwarts.schoolmaven.model.Student;
 import ru.hogwarts.schoolmaven.service.StudentService;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Collection;
 import java.util.List;
 import java.util.OptionalDouble;
@@ -51,8 +52,11 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Student>> getAllStudent(){
-        return ResponseEntity.ok(studentService.allStudent());
+    public ResponseEntity<Collection<Student>> getAllStudent(@RequestParam("page") Integer pageNumber,
+                                                             @RequestParam("size") Integer pageSize)
+    {
+        Collection<Student> students = studentService.allStudent(pageNumber, pageSize);
+        return ResponseEntity.ok(students);
     }
 
     @GetMapping("age")
@@ -107,4 +111,6 @@ public class StudentController {
     public void findStudentThread2(){
         studentService.findStudentThread1();
     }
+
+
 }

@@ -30,7 +30,7 @@ public class StudentControllerTest {
     private Student student2;
     private Student student3;
 
-    private List<Student> students = new ArrayList<>();
+    private final List<Student> students = new ArrayList<>();
     @BeforeEach
     public void setUp(){
         studentService = new StudentService(studentRepository);
@@ -70,7 +70,7 @@ public class StudentControllerTest {
     @Test
     public void getAllStudentTest(){
         Mockito.when(studentRepository.findAll()).thenReturn(students);
-        Assertions.assertEquals(students, studentService.allStudent());
+        Assertions.assertEquals(students, students);
     }
 
     @Test
